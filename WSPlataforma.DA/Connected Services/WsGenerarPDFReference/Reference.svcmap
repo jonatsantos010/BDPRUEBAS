@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="37693f6f-11ed-4e40-88f7-c5674eb83044" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.19.118.92/WSExterno/WsGenerarPDFexterno.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WsGenerarPDFexterno.xsd" MetadataType="Schema" ID="2092e661-4709-45fa-9afa-4cf1506a0561" SourceId="1" SourceUrl="http://172.19.118.92/WSExterno/WsGenerarPDFexterno.svc?xsd=xsd0" />
+    <MetadataFile FileName="WsGenerarPDFexterno.wsdl" MetadataType="Wsdl" ID="5ff5642a-1de5-410d-949b-131f2bc7188a" SourceId="1" SourceUrl="http://172.19.118.92/WSExterno/WsGenerarPDFexterno.svc?wsdl" />
+    <MetadataFile FileName="WsGenerarPDFexterno1.xsd" MetadataType="Schema" ID="5afff21c-7f44-49c2-ab5e-6a16eb8208f7" SourceId="1" SourceUrl="http://172.19.118.92/WSExterno/WsGenerarPDFexterno.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

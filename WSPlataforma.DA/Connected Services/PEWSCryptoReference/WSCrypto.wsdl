@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="EncryptText">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="plainText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="publicKey" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EncryptTextResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EncryptTextResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DecryptText">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="encryptText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="privateKey" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DecryptTextResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DecryptTextResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Signer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="plainText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="privateKey" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SignerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SignerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="EncryptTextSoapIn">
+    <wsdl:part name="parameters" element="tns:EncryptText" />
+  </wsdl:message>
+  <wsdl:message name="EncryptTextSoapOut">
+    <wsdl:part name="parameters" element="tns:EncryptTextResponse" />
+  </wsdl:message>
+  <wsdl:message name="DecryptTextSoapIn">
+    <wsdl:part name="parameters" element="tns:DecryptText" />
+  </wsdl:message>
+  <wsdl:message name="DecryptTextSoapOut">
+    <wsdl:part name="parameters" element="tns:DecryptTextResponse" />
+  </wsdl:message>
+  <wsdl:message name="SignerSoapIn">
+    <wsdl:part name="parameters" element="tns:Signer" />
+  </wsdl:message>
+  <wsdl:message name="SignerSoapOut">
+    <wsdl:part name="parameters" element="tns:SignerResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSCryptoSoap">
+    <wsdl:operation name="EncryptText">
+      <wsdl:input message="tns:EncryptTextSoapIn" />
+      <wsdl:output message="tns:EncryptTextSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DecryptText">
+      <wsdl:input message="tns:DecryptTextSoapIn" />
+      <wsdl:output message="tns:DecryptTextSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Signer">
+      <wsdl:input message="tns:SignerSoapIn" />
+      <wsdl:output message="tns:SignerSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSCryptoSoap" type="tns:WSCryptoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EncryptText">
+      <soap:operation soapAction="http://tempuri.org/EncryptText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DecryptText">
+      <soap:operation soapAction="http://tempuri.org/DecryptText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Signer">
+      <soap:operation soapAction="http://tempuri.org/Signer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSCryptoSoap12" type="tns:WSCryptoSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="EncryptText">
+      <soap12:operation soapAction="http://tempuri.org/EncryptText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DecryptText">
+      <soap12:operation soapAction="http://tempuri.org/DecryptText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Signer">
+      <soap12:operation soapAction="http://tempuri.org/Signer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSCrypto">
+    <wsdl:port name="WSCryptoSoap" binding="tns:WSCryptoSoap">
+      <soap:address location="http://cip.pagoefectivo.pe/PagoEfectivoWSCrypto/WSCrypto.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSCryptoSoap12" binding="tns:WSCryptoSoap12">
+      <soap12:address location="http://cip.pagoefectivo.pe/PagoEfectivoWSCrypto/WSCrypto.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
