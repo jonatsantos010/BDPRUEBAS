@@ -1,28 +1,48 @@
-nombre:  SonarCloud 
-en: 
-  push: 
-    ramas: 
-      -  main 
-  pull_request: 
-    tipos: [ abierto , sincronizar , reabierto ]
- trabajos: 
-  compilación: 
-    nombre:  Compilar  y  analizar 
-    runs-on:  windows-latest 
-    env: 
-      BUILD_WRAPPER_OUT_DIR:  build_wrapper_output_directory  # Directorio donde se colocará la salida de build-wrapper 
-    pasos: 
-      -  usos:  acciones/checkout@v3 
-        con: 
-          fetch-depth:  0   # Los clones superficiales deben estar deshabilitados para una mejor relevancia del análisis 
-      -  nombre:  Instalar  sonar-scanner  y  build-wrapper 
-        usos:  SonarSource/sonarcloud-github-c-cpp@v2 
-      -  nombre:  Ejecutar  build-wrapper 
-        run:  | 
-          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }}<inserte_su_comando_de_compilación_limpia>
-      -  nombre:  Ejecutar  sonar-scanner 
-        env: 
-          GITHUB_TOKEN:  ${{  secrets.GITHUB_TOKEN  }} 
-          SONAR_TOKEN:  ${{  secrets.SONAR_TOKEN  }} 
-        ejecutar:  | 
-          sonar-scanner --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
+name: SonarCloud
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  build:
+    name: Build and analyze
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'zulu' # Alternative distribution options are available.
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v3
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"jonatsantos010_BDPRUEBAS" /o:"jonatsantos010" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
